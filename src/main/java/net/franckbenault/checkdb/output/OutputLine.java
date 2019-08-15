@@ -13,6 +13,10 @@ public class OutputLine {
 	public String getMessage() {
 		return message;
 	}
+	
+	public OutputLine() {
+		resultCode = ResultCode.OK;
+	}
 
 	public OutputLine(ResultCode resultCode, String message) {
 		this.resultCode = resultCode;

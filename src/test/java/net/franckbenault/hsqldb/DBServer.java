@@ -64,4 +64,27 @@ public class DBServer {
 		}
 	}
 
+	public void dropTable(String tableName) {
+		Connection connection = null;
+		try {
+			Class.forName("org.hsqldb.jdbcDriver");
+			connection = DriverManager.getConnection(
+			        "jdbc:hsqldb:hsql://localhost/xdb", "sa", "");
+			
+			connection.prepareStatement(
+			        "drop table "+ tableName+";")
+			        .execute();
+		} catch (ClassNotFoundException | SQLException e ) {
+			e.printStackTrace();
+		} finally {
+			if(connection!= null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
+	}
+
 }

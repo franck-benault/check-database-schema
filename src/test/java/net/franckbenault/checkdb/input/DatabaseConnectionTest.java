@@ -68,6 +68,7 @@ public class DatabaseConnectionTest {
 		Connection connection = dbConnection.getConnection();
 		
 		assertNotNull(connection);
+		server.dropTable("FOO");
 		server.stop();
 		
 	}

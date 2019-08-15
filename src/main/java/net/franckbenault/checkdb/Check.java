@@ -12,9 +12,11 @@ public class Check {
 		
 		CheckOutput output = new CheckOutput();
 		
+		
 		for(Rule rule : rules) {
-			output.addLine(rule.apply(dbConnection));
+				output.addLine(rule.apply(dbConnection));
 		}
+
 		
 		return output;
 		
