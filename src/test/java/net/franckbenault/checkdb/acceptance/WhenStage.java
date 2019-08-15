@@ -1,10 +1,13 @@
 package net.franckbenault.checkdb.acceptance;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
+import com.tngtech.jgiven.annotation.Quoted;
 
 import net.franckbenault.checkdb.Check;
 import net.franckbenault.checkdb.input.DatabaseConnection;
@@ -23,10 +26,14 @@ public class WhenStage {
        
     @ProvidedScenarioState
     CheckOutput output;
+    
+    @ExpectedScenarioState
+    List<String> tables = new ArrayList<>();
 
     private void stopDb() {
     	if(server!= null) {
-    		server.dropTable("FOO");
+    		for(String table: tables)
+    			server.dropTable(table);
 			server.stop();
     	}
     }
@@ -60,6 +67,15 @@ public class WhenStage {
 		Set<Rule> rules = new HashSet<>();
 		
 		rules.add(new Rule("database exists"));
+		output =Check.check(databaseConnection, rules);
+		stopDb();
+		
+	}
+
+	public void i_check_with_rule_table_$_exists(@Quoted String table) {
+		Set<Rule> rules = new HashSet<>();
+		
+		rules.add(new Rule("table "+table+" exists"));
 		output =Check.check(databaseConnection, rules);
 		stopDb();
 		
