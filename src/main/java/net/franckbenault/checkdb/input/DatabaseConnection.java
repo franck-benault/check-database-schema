@@ -22,7 +22,7 @@ public class DatabaseConnection {
 		
 		Connection connection = null;
 		
-		if(databaseType.equals(DatabaseType.HSQLDB))
+		if(DatabaseType.HSQLDB.equals(databaseType))
 			Class.forName("org.hsqldb.jdbcDriver");
 		else
 			return null;
