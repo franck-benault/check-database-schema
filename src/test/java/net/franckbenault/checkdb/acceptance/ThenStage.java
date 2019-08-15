@@ -1,7 +1,6 @@
 package net.franckbenault.checkdb.acceptance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import net.franckbenault.checkdb.output.CheckOutput;
@@ -13,26 +12,22 @@ public class ThenStage {
     CheckOutput output;
     
 
-	public void the_output_is_OK_with_no_message() {
+	public void the_output_is_$_with_$_message(String outputResult, String nbMessages) {
+
+		if("OK".equals(outputResult))
+			assertEquals(output.getResultCode(), ResultCode.OK);
 		
-		assertEquals(output.getResultCode(), ResultCode.OK);
-		assertTrue(output.getMessages().isEmpty());
-			
-	}
-
-
-	public void the_output_is_WARN_with_one_message() {
+		if("WARN".equals(outputResult))
+			assertEquals(output.getResultCode(), ResultCode.WARN);
 		
-		assertEquals(output.getResultCode(), ResultCode.WARN);
-		assertEquals(output.getMessages().size(), 1);
+		if("ERROR".equals(outputResult))
+			assertEquals(output.getResultCode(), ResultCode.ERROR);	
 		
-	}
-
-
-	public void the_output_is_ERROR_with_one_message() {
-
-		assertEquals(output.getResultCode(), ResultCode.ERROR);
-		assertEquals(output.getMessages().size(), 1);
+		if("no".equals(nbMessages))
+			assertEquals(output.getMessages().size(), 0);
+		
+		if("one".equals(nbMessages))
+			assertEquals(output.getMessages().size(), 1);
 		
 	}
 
