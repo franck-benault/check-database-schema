@@ -16,7 +16,18 @@ public class Rule {
 
 	public OutputLine apply(DatabaseConnection dbConnection)  {
 		
-
+		try {
+			if(dbConnection != null) {
+				if(DatabaseType.HSQLDB.equals(dbConnection.getDatabaseType()))
+					Class.forName("org.hsqldb.jdbcDriver");
+				if(DatabaseType.ORACLE.equals(dbConnection.getDatabaseType()))
+					Class.forName("oracle.jdbc.driver.OracleDriver");
+			}
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		System.out.println("ruleOrder "+ruleOrder);
 		Statement statement = null;
 		
 		if(ruleOrder.startsWith("#")) {

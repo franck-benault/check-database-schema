@@ -48,9 +48,9 @@ public class Main {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileNameRules))) {
 			String line = br.readLine();
 			while (line != null) {
-				line = br.readLine();
 				Rule rule = new Rule(line);
 				rules.add(rule);
+				line = br.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

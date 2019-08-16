@@ -7,6 +7,10 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
 	private DatabaseType databaseType;
+	public DatabaseType getDatabaseType() {
+		return databaseType;
+	}
+
 	private String url;
 	private String user;
 	private String password;
