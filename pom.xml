@@ -58,6 +58,11 @@
 			<version>1.7.28</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.75</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

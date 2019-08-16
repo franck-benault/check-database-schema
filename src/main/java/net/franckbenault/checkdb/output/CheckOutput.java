@@ -5,6 +5,11 @@ import java.util.List;
 
 public class CheckOutput {
 	
+	@Override
+	public String toString() {
+		return "CheckOutput [resultCode=" + resultCode + ", messages=" + messages + "]";
+	}
+
 	private	ResultCode resultCode;
 	private List<String> messages;
 	
