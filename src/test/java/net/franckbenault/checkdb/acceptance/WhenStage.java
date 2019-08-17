@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.tngtech.jgiven.Stage;
+import com.tngtech.jgiven.annotation.As;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
 import com.tngtech.jgiven.annotation.Quoted;
@@ -16,19 +18,21 @@ import net.franckbenault.checkdb.output.CheckOutput;
 import net.franckbenault.hsqldb.DBServer;
 
 
-public class WhenStage {
+public class WhenStage extends Stage<WhenStage>{
 	
     @ExpectedScenarioState
-    DatabaseConnection databaseConnection;
+    private DatabaseConnection databaseConnection;
     
     @ExpectedScenarioState
-    DBServer server;
+    private DBServer server;
        
     @ProvidedScenarioState
-    CheckOutput output;
+    private CheckOutput output;
     
     @ExpectedScenarioState
-    List<String> tables = new ArrayList<>();
+    private List<String> tables = new ArrayList<>();
+    
+    private Set<Rule> rules = new HashSet<>();	
 
     private void stopDb() {
     	if(server!= null) {
@@ -38,47 +42,23 @@ public class WhenStage {
     	}
     }
 
-	public void i_check_with_no_rule() {
-		Set<Rule> rules = new HashSet<>();	
+	@As( "I check" )
+	public void i_check() {
+		
 		output =Check.check(databaseConnection, rules);
 		stopDb();
 		
 	}
 
-	public void i_check_with_a_commented_rule() {
-		Set<Rule> rules = new HashSet<>();	
-		
-		rules.add(new Rule("# commented rules"));
-		output =Check.check(databaseConnection, rules);
-		stopDb();
-		
-	}
 
-	public void i_check_with_an_unknown_rule() {
-		Set<Rule> rules = new HashSet<>();
+	@As( "I add a rule $" )
+	public WhenStage i_add_the_rule_$(@Quoted String ruleTxt) {
 		
-		rules.add(new Rule("unknown rule"));
-		output =Check.check(databaseConnection, rules);
-		stopDb();
 		
-	}
+		rules.add(new Rule(ruleTxt));
+		
+		return self();
 
-	public void i_check_with_rule_database_exists() {
-		Set<Rule> rules = new HashSet<>();
-		
-		rules.add(new Rule("database exists"));
-		output =Check.check(databaseConnection, rules);
-		stopDb();
-		
-	}
-
-	public void i_check_with_rule_table_$_exists(@Quoted String table) {
-		Set<Rule> rules = new HashSet<>();
-		
-		rules.add(new Rule("table "+table+" exists"));
-		output =Check.check(databaseConnection, rules);
-		stopDb();
-		
 	}
 
 }

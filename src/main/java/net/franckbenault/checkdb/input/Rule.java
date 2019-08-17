@@ -18,10 +18,13 @@ public class Rule {
 			
 		Statement statement = null;
 		
+		
 		if(ruleOrder.startsWith("#")) {
 			//rule commented
 			return new OutputLine();
-		} if(ruleOrder.equals("database exists")) {
+		} else if(ruleOrder.trim().equals("")) {
+			return new OutputLine();
+		} else if(ruleOrder.equals("database exists")) {
 			
 			String request ="";
 			if(dbConnection != null) {
@@ -39,11 +42,11 @@ public class Rule {
 				statement
 						.executeQuery(request);
 			} catch (Exception e) {
-				return new OutputLine(ResultCode.ERROR, "database does not exist");
+				return new OutputLine(ResultCode.ERROR, "Database does not exist");
 			}
 			
 			return new OutputLine();
-		} if(ruleOrder.startsWith("table") && !ruleOrder.endsWith("does not exists")) {
+		} else if(ruleOrder.startsWith("table") && !ruleOrder.endsWith("does not exists")) {
 			String[] tabs =ruleOrder.split(" ");
 			String table = tabs[1];
 			try {
@@ -52,13 +55,13 @@ public class Rule {
 				statement
 						.executeQuery("SELECT * from "+table);
 			} catch (Exception e) {
-				return new OutputLine(ResultCode.ERROR, "table "+table+" does not exist");
+				return new OutputLine(ResultCode.ERROR, "Table "+table+" does not exist");
 			}
 			
 			return new OutputLine();
 		} else {
 			//unknown rule
-			return new OutputLine(ResultCode.WARN, "unknown rule "+ruleOrder);
+			return new OutputLine(ResultCode.WARN, "Unknown rule "+ruleOrder);
 		}
 		
 	

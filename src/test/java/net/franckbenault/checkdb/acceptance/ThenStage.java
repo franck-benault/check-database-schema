@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.tngtech.jgiven.Stage;
+import com.tngtech.jgiven.annotation.As;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.Quoted;
 
@@ -13,9 +14,10 @@ import net.franckbenault.checkdb.output.ResultCode;
 public class ThenStage extends Stage<ThenStage>{
 	
     @ExpectedScenarioState
-    CheckOutput output;
+    private CheckOutput output;
     
 
+	@As( "the output is $_with $ message(s)" )
 	public ThenStage the_output_is_$_with_$_message(@Quoted String outputResult, String nbMessages) {
 
 		if("OK".equals(outputResult))
@@ -33,14 +35,22 @@ public class ThenStage extends Stage<ThenStage>{
 		if("one".equals(nbMessages))
 			assertEquals(output.getMessages().size(), 1);
 		
+		if("one".equals(nbMessages))
+			assertEquals(output.getMessages().size(), 1);
+		
 		return self();
 		
 	}
 
 
-	public void the_list_of_messages_in_output_contains_$(@Quoted String message) {
+	public void the_list_of_messages_in_output_contains_$(@Quoted String messageInput) {
 		
-		assertTrue(output.getMessages().contains(message));
+		boolean found = false;
+		for(String message : output.getMessages()) {
+			if(message.contains(messageInput))
+				found = true;
+		}
+		assertTrue(found);
 		
 	}
 
