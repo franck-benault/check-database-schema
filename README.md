@@ -19,6 +19,9 @@ database exists
 ### Check if a table exists
 table &lt;tableName&gt; exists
 
+### Check if a table does not exist
+table &lt;tableName&gt; does not exist
+
 ## File example
 
 ```
@@ -27,6 +30,7 @@ table &lt;tableName&gt; exists
 database exists
 table FOO exists
 table FOO2 exists
+table FOO3 does not exist
 # End file
 ```
 

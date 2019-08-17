@@ -105,4 +105,24 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
         the_list_of_messages_in_output_contains_$("Table FOO2 does not exist");
 	}
 	
+	@Test
+	public void check06a_rule_table_does_not_exist() {
+		String tableName ="FOO";
+        given().an_dbhsql_database_containing_the_table_$(tableName);
+        when().i_add_the_rule_$("table "+tableName+"2 does not exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("OK","no");
+	}
+	
+	
+	@Test
+	public void check06b_rule_table_does_not_exist_ERROR() {
+		String tableName ="FOO";
+        given().an_dbhsql_database_containing_the_table_$(tableName);
+        when().i_add_the_rule_$("table "+tableName+" does not exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("ERROR","one").and().
+        the_list_of_messages_in_output_contains_$("Table FOO exists");
+	}
+	
 }

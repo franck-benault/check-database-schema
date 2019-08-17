@@ -46,7 +46,7 @@ public class Rule {
 			}
 			
 			return new OutputLine();
-		} else if(ruleOrder.startsWith("table") && !ruleOrder.endsWith("does not exists")) {
+		} else if(ruleOrder.startsWith("table") && ruleOrder.endsWith(" exists")) {
 			String[] tabs =ruleOrder.split(" ");
 			String table = tabs[1];
 			try {
@@ -59,6 +59,19 @@ public class Rule {
 			}
 			
 			return new OutputLine();
+		} else if(ruleOrder.startsWith("table") && ruleOrder.endsWith("does not exist")) {
+			String[] tabs =ruleOrder.split(" ");
+			String table = tabs[1];
+			try {
+				Connection connection = dbConnection.getConnection();
+				statement = connection.createStatement();
+				statement
+						.executeQuery("SELECT * from "+table);
+			} catch (Exception e) {
+				return new OutputLine();
+			}
+			
+			return new OutputLine(ResultCode.ERROR, "Table "+table+" exists");
 		} else {
 			//unknown rule
 			return new OutputLine(ResultCode.WARN, "Unknown rule "+ruleOrder);
