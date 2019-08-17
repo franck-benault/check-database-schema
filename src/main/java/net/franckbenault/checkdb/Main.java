@@ -42,7 +42,7 @@ public class Main {
 
 		DatabaseType dbType = DatabaseType.valueOf(databaseType);
 
-		DatabaseConnection dbConnection = new DatabaseConnection(dbType, user, user, password);
+		DatabaseConnection dbConnection = new DatabaseConnection(dbType, url, user, password);
 		Set<Rule> rules = new HashSet<>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(fileNameRules))) {

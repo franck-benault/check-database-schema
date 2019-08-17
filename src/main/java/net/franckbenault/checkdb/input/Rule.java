@@ -15,30 +15,29 @@ public class Rule {
 	}
 
 	public OutputLine apply(DatabaseConnection dbConnection)  {
-		
-		try {
-			if(dbConnection != null) {
-				if(DatabaseType.HSQLDB.equals(dbConnection.getDatabaseType()))
-					Class.forName("org.hsqldb.jdbcDriver");
-				if(DatabaseType.ORACLE.equals(dbConnection.getDatabaseType()))
-					Class.forName("oracle.jdbc.driver.OracleDriver");
-			}
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		
-		System.out.println("ruleOrder "+ruleOrder);
+			
 		Statement statement = null;
 		
 		if(ruleOrder.startsWith("#")) {
 			//rule commented
 			return new OutputLine();
 		} if(ruleOrder.equals("database exists")) {
+			
+			String request ="";
+			if(dbConnection != null) {
+				if(DatabaseType.HSQLDB.equals(dbConnection.getDatabaseType()))
+					request ="SELECT 1 from (VALUES(0))";
+				else if(DatabaseType.ORACLE.equals(dbConnection.getDatabaseType()))
+					request ="SELECT 1 from dual";
+			}
+
+			
+			
 			try {
 				Connection connection = dbConnection.getConnection();
 				statement = connection.createStatement();
 				statement
-						.executeQuery("SELECT 1 from (VALUES(0))");
+						.executeQuery(request);
 			} catch (Exception e) {
 				return new OutputLine(ResultCode.ERROR, "database does not exist");
 			}

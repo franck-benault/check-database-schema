@@ -28,6 +28,8 @@ public class DatabaseConnection {
 		
 		if(DatabaseType.HSQLDB.equals(databaseType))
 			Class.forName("org.hsqldb.jdbcDriver");
+		else if(DatabaseType.ORACLE.equals(databaseType))
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 		else
 			return null;
 		
