@@ -21,13 +21,13 @@ table &lt;tableName&gt; exists
 
 ## File example
 
-<code>
-# This is a comment following by an empty line<br>
-<br>
-database exists<br>
-table FOO exists<br>
-table FOO2 exists<br>
-# End file<br>
-</code>
+```
+# This is a comment following by an empty line
+
+database exists
+table FOO exists
+table FOO2 exists
+# End file
+```
 
 
