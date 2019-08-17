@@ -33,7 +33,7 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
 	@Test
 	public void check01b_rule_only_space() {
         given().an_dbhsql_database();
-        when().i_add_the_rule_$("   ").
+        when().i_add_the_rule_$("   ").$("An empty rule").
         and().i_check();
         then().the_output_is_$_with_$_message("OK", "no");
 	}
