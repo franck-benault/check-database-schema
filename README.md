@@ -1,5 +1,5 @@
 # Check-database-schema
-check database schema following a set of rules
+Check database schema following a set of rules
 
 ## Supported databases
 * Oracle
@@ -7,10 +7,10 @@ check database schema following a set of rules
 
 ## Rules
 
-### Empty line
+### Empty lines
 an empty line or a line containing only space in not taken in account
 
-### Commented rule
+### Commented rules
 rule started by #
 
 ### Check if the database exists
