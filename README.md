@@ -22,6 +22,12 @@ table &lt;tableName&gt; exists
 ### Check if a table does not exist
 table &lt;tableName&gt; does not exist
 
+### Trim rule
+the rule are trimmed 
+" table foo exists  "
+becomes
+"table foo exists"
+
 ## File example
 
 ```

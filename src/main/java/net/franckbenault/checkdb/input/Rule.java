@@ -11,7 +11,7 @@ public class Rule {
 	private String ruleOrder;
 
 	public Rule(String ruleOrder) {
-		this.ruleOrder = ruleOrder;
+		this.ruleOrder = ruleOrder.trim();
 	}
 
 	public OutputLine apply(DatabaseConnection dbConnection)  {

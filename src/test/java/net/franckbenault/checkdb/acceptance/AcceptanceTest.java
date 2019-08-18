@@ -125,4 +125,14 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
         the_list_of_messages_in_output_contains_$("Table FOO exists");
 	}
 	
+	
+	@Test
+	public void check99_trim_rules() {
+		String tableName ="FOO";
+        given().an_dbhsql_database_containing_the_table_$(tableName);
+        when().i_add_the_rule_$(" table "+tableName+" exists ").
+        and().i_check();
+        then().the_output_is_$_with_$_message("OK","no");
+	}
+	
 }
