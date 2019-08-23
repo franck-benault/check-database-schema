@@ -14,7 +14,7 @@ public class Check {
 		
 		
 		for(Rule rule : rules) {
-				output.addLine(rule.apply(dbConnection));
+				output.addOutput(rule.apply(dbConnection));
 		}
 
 		

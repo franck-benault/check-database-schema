@@ -17,7 +17,12 @@ rule started by #
 database exists
 
 ### Check if a table exists
+#### One table
 table &lt;tableName&gt; exists
+
+#### Several tables
+tables &lt;tableName1&gt;,&lt;tableName2&gt;... exist
+
 
 ### Check if a table does not exist
 table &lt;tableName&gt; does not exist

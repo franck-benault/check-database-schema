@@ -9,7 +9,7 @@ import com.tngtech.jgiven.junit5.ScenarioTest;
 
 
 
-@DisplayName("Example tests with jgiven")
+@DisplayName("Acceptance tests with jgiven")
 @RunWith(JUnitPlatform.class)
 public class AcceptanceTest 
 extends ScenarioTest<GivenStage, WhenStage, ThenStage> 
@@ -123,6 +123,28 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
         and().i_check();
         then().the_output_is_$_with_$_message("ERROR","one").and().
         the_list_of_messages_in_output_contains_$("Table FOO exists");
+	}
+	
+	@Test
+	public void check07a_rule_table_exists_ok() {
+		String tableName1 ="FOO1";
+		String tableName2 ="FOO2";
+        given().an_dbhsql_database_containing_the_tables_$(tableName1,tableName2);
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+" exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("OK","no");
+	}
+	
+	@Test
+	public void check07b_rule_table_exists_error() {
+		String tableName1 ="FOO1";
+		String tableName2 ="FOO2";
+		String tableName3 ="FOO3";
+        given().an_dbhsql_database_containing_the_tables_$(tableName1,tableName2);
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+","+tableName3+" exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("ERROR","one").and().
+        the_list_of_messages_in_output_contains_$("Table "+tableName3 +" does not exist");
 	}
 	
 	

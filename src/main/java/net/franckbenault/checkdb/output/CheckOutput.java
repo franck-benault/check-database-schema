@@ -36,6 +36,17 @@ public class CheckOutput {
 		return messages;
 	}
 
+	public void addOutput(CheckOutput output) {
+		if (output.getMessages()!=null) 
+			messages.addAll(output.getMessages());
+		if(resultCode== ResultCode.OK)
+			resultCode= output.getResultCode();
+		
+		if(resultCode== ResultCode.WARN && output.getResultCode()==ResultCode.ERROR)
+			resultCode= output.getResultCode();
+		
+	}
+
 
 
 }

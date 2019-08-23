@@ -3,6 +3,7 @@ package net.franckbenault.checkdb.input;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import net.franckbenault.checkdb.output.CheckOutput;
 import net.franckbenault.checkdb.output.OutputLine;
 import net.franckbenault.checkdb.output.ResultCode;
 
@@ -14,16 +15,22 @@ public class Rule {
 		this.ruleOrder = ruleOrder.trim();
 	}
 
-	public OutputLine apply(DatabaseConnection dbConnection)  {
+	public CheckOutput apply(DatabaseConnection dbConnection)  {
 			
 		Statement statement = null;
+		CheckOutput output = new CheckOutput();
 		
 		
 		if(ruleOrder.startsWith("#")) {
 			//rule commented
-			return new OutputLine();
+			return output;
+			
+			
 		} else if(ruleOrder.trim().equals("")) {
-			return new OutputLine();
+			OutputLine line =
+					new OutputLine();
+			output.addLine(line);
+			return output;
 		} else if(ruleOrder.equals("database exists")) {
 			
 			String request ="";
@@ -42,10 +49,35 @@ public class Rule {
 				statement
 						.executeQuery(request);
 			} catch (Exception e) {
-				return new OutputLine(ResultCode.ERROR, "Database does not exist");
+				
+				OutputLine line = new OutputLine(ResultCode.ERROR, "Database does not exist");
+				output.addLine(line);
+				return output;
+
 			}
 			
-			return new OutputLine();
+			return new CheckOutput();
+		} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith(" exist")) {
+			String[] tabs =ruleOrder.split(" ");
+			String tables = tabs[1];
+			String[] tables2 = tables.split(",");
+			
+			
+			for(String table : tables2) {
+				try {
+					Connection connection = dbConnection.getConnection();
+					statement = connection.createStatement();
+					statement
+						.executeQuery("SELECT * from "+table);
+				} catch (Exception e) {
+					OutputLine line = new OutputLine(ResultCode.ERROR, "Table "+table+" does not exist");
+					output.addLine(line);
+					
+				}
+			}
+			
+			return output;
+			
 		} else if(ruleOrder.startsWith("table") && ruleOrder.endsWith(" exists")) {
 			String[] tabs =ruleOrder.split(" ");
 			String table = tabs[1];
@@ -55,10 +87,12 @@ public class Rule {
 				statement
 						.executeQuery("SELECT * from "+table);
 			} catch (Exception e) {
-				return new OutputLine(ResultCode.ERROR, "Table "+table+" does not exist");
+				OutputLine line =  new OutputLine(ResultCode.ERROR, "Table "+table+" does not exist");
+				output.addLine(line);
+				return output;
 			}
 			
-			return new OutputLine();
+			return new CheckOutput();
 		} else if(ruleOrder.startsWith("table") && ruleOrder.endsWith("does not exist")) {
 			String[] tabs =ruleOrder.split(" ");
 			String table = tabs[1];
@@ -68,16 +102,21 @@ public class Rule {
 				statement
 						.executeQuery("SELECT * from "+table);
 			} catch (Exception e) {
-				return new OutputLine();
+				return output;
 			}
 			
-			return new OutputLine(ResultCode.ERROR, "Table "+table+" exists");
+			OutputLine line =  new OutputLine(ResultCode.ERROR, "Table "+table+" exists");
+			output.addLine(line);
+			return output;
+			
 		} else {
 			//unknown rule
-			return new OutputLine(ResultCode.WARN, "Unknown rule "+ruleOrder);
+			OutputLine line =  new OutputLine(ResultCode.WARN, "Unknown rule "+ruleOrder);
+			output.addLine(line);
+			return output;
 		}
 		
-	
+		
 	}
 
 }
