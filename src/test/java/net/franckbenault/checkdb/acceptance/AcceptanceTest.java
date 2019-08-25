@@ -149,6 +149,31 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
 	
 	
 	@Test
+	public void check08a_rule_table_exists_ok() {
+		String tableName0 = "FOO0";
+		String tableName1 = "FOO1";
+		String tableName2 = "FOO2";
+        given().an_dbhsql_database_containing_the_tables_$(tableName0);
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+"do not exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("OK","no");
+	}
+	
+	@Test
+	public void check08b_rule_table_exists_error() {
+		String tableName1 ="FOO1";
+		String tableName2 ="FOO2";
+		String tableName3 ="FOO3";
+        given().an_dbhsql_database_containing_the_tables_$(tableName1,tableName2);
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+","+tableName3+"do not exist").
+        and().i_check();
+        then().the_output_is_$_with_$_message("ERROR","two").and().
+        the_list_of_messages_in_output_contains_$("Table "+tableName1 +" exists").and().
+        the_list_of_messages_in_output_contains_$("Table "+tableName2 +" exists");
+	}
+	
+	
+	@Test
 	public void check99_trim_rules() {
 		String tableName ="FOO";
         given().an_dbhsql_database_containing_the_table_$(tableName);

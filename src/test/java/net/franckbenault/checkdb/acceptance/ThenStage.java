@@ -43,7 +43,7 @@ public class ThenStage extends Stage<ThenStage>{
 	}
 
 
-	public void the_list_of_messages_in_output_contains_$(@Quoted String messageInput) {
+	public ThenStage the_list_of_messages_in_output_contains_$(@Quoted String messageInput) {
 		
 		boolean found = false;
 		for(String message : output.getMessages()) {
@@ -51,6 +51,7 @@ public class ThenStage extends Stage<ThenStage>{
 				found = true;
 		}
 		assertTrue(found);
+		return self();
 		
 	}
 

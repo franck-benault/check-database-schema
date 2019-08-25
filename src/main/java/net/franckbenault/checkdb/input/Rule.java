@@ -57,6 +57,32 @@ public class Rule {
 			}
 			
 			return new CheckOutput();
+		} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith("do not exist")) {	
+			String[] tabs =ruleOrder.split(" ");
+			String tables = tabs[1];
+			String[] tables2 = tables.split(",");
+			
+			
+			for(String table : tables2) {
+				try {
+					Connection connection = dbConnection.getConnection();
+					statement = connection.createStatement();
+					statement
+						.executeQuery("SELECT * from "+table);
+					
+					//ERROR
+					OutputLine line = new OutputLine(ResultCode.ERROR, "Table "+table+" exists");
+					output.addLine(line);
+					
+				} catch (Exception e) {
+					//OK
+
+					
+				}
+			}
+			
+			return output;
+			
 		} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith(" exist")) {
 			String[] tabs =ruleOrder.split(" ");
 			String tables = tabs[1];
