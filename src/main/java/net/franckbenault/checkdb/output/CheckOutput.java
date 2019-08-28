@@ -21,11 +21,10 @@ public class CheckOutput {
 	public void addLine(OutputLine line) {
 		if (line.getMessage()!=null) 
 			messages.add(line.getMessage());
-		if(resultCode== ResultCode.OK)
-			resultCode= line.getResultCode();
 		
-		if(resultCode== ResultCode.WARN && line.getResultCode()==ResultCode.ERROR)
+		if(resultCode.compareTo(line.getResultCode())<0)
 			resultCode= line.getResultCode();
+
 	}
 	
 	public ResultCode getResultCode() {
@@ -39,10 +38,7 @@ public class CheckOutput {
 	public void addOutput(CheckOutput output) {
 		if (output.getMessages()!=null) 
 			messages.addAll(output.getMessages());
-		if(resultCode== ResultCode.OK)
-			resultCode= output.getResultCode();
-		
-		if(resultCode== ResultCode.WARN && output.getResultCode()==ResultCode.ERROR)
+		if(resultCode.compareTo(output.getResultCode())<0)
 			resultCode= output.getResultCode();
 		
 	}
