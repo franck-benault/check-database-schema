@@ -1,5 +1,7 @@
 package net.franckbenault.checkdb.input;
 
+import java.util.regex.Pattern;
+
 public enum RuleType {
 
 	
@@ -13,15 +15,23 @@ public enum RuleType {
 	UNKNOWN_RULE;
 	
 	public static RuleType getType(String ruleOrderInput) {
-		String ruleOrder = ruleOrderInput.trim();
 		
-		if(ruleOrder.startsWith("#")) {
+		String ruleOrder = ruleOrderInput.trim();
+
+		boolean b = Pattern.compile("^#.*$").matcher(ruleOrder).find();
+		
+		boolean b2 = Pattern.compile("^[Tt]ables (.)* do not exist$").matcher(ruleOrder).find();
+		System.out.println(b2);
+		
+		//if(ruleOrder.startsWith("#")) {
+		if(b) {
 			return RuleType.COMMENT;		
 		} else if(ruleOrder.equals("")) {
 			return RuleType.EMPTY_LINE;
-		} else if(ruleOrder.equals("database exists")) {
+		} else if(ruleOrder.equalsIgnoreCase("database exists")) {
 			return RuleType.DATABASE_EXISTS;
-		} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith("do not exist")) {	
+		} else if(b2) {
+		//} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith("do not exist")) {	
 			return RuleType.TABLES_DO_NOT_EXIST;		
 		} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith(" exist")) {
 			return RuleType.TABLES_EXIST;			

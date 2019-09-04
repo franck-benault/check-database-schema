@@ -154,7 +154,7 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
 		String tableName1 = "FOO1";
 		String tableName2 = "FOO2";
         given().an_dbhsql_database_containing_the_tables_$(tableName0);
-        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+"do not exist").
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+" do not exist").
         and().i_check();
         then().the_output_is_$_with_$_message("OK","no");
 	}
@@ -165,7 +165,7 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
 		String tableName2 ="FOO2";
 		String tableName3 ="FOO3";
         given().an_dbhsql_database_containing_the_tables_$(tableName1,tableName2);
-        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+","+tableName3+"do not exist").
+        when().i_add_the_rule_$("tables "+tableName1+","+tableName2+","+tableName3+" do not exist").
         and().i_check();
         then().the_output_is_$_with_$_message("ERROR","two").and().
         the_list_of_messages_in_output_contains_$("Table "+tableName1 +" exists").and().
