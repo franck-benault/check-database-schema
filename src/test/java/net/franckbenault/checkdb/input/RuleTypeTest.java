@@ -48,7 +48,7 @@ class RuleTypeTest {
 	@Test
 	void testRuleTypeTablesDoNotExist() {
 		
-		RuleType t =RuleType.getType("Tables toto,titi,tata do not exist");
+		RuleType t =RuleType.getType("tables toto,titi,tata do not exist");
 		assertEquals(t, RuleType.TABLES_DO_NOT_EXIST);
 		
 		t =RuleType.getType(" Tables toto,titi,tata do not exist ");
@@ -56,6 +56,20 @@ class RuleTypeTest {
 		
 		t =RuleType.getType("this is not an tables do not exist rule");
 		assertNotEquals(t, RuleType.TABLES_DO_NOT_EXIST);
+	}
+	
+	
+	@Test
+	void testRuleTypeTablesExist() {
+		
+		RuleType t =RuleType.getType("Tables toto,titi,tata exist");
+		assertEquals(t, RuleType.TABLES_EXIST);
+		
+		t =RuleType.getType(" Tables toto,titi,tata exist ");
+		assertEquals(t, RuleType.TABLES_EXIST);
+		
+		t =RuleType.getType("this is not an tables exist rule");
+		assertNotEquals(t, RuleType.TABLES_EXIST);
 	}
 	
 	
