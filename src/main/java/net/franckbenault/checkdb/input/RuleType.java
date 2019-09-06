@@ -18,17 +18,16 @@ public enum RuleType {
 		
 		String ruleOrder = ruleOrderInput.trim();
 
-		boolean b = Pattern.compile("^#.*$").matcher(ruleOrder).find();
-		
+		boolean bComment = Pattern.compile("^#.*$").matcher(ruleOrder).find();		
+		boolean bDatabaseExists = Pattern.compile("^[Dd]atabase exists$").matcher(ruleOrder).find();	
 		boolean b2 = Pattern.compile("^[Tt]ables (.)* do not exist$").matcher(ruleOrder).find();
-		System.out.println(b2);
 		
-		//if(ruleOrder.startsWith("#")) {
-		if(b) {
+
+		if(bComment) {
 			return RuleType.COMMENT;		
 		} else if(ruleOrder.equals("")) {
 			return RuleType.EMPTY_LINE;
-		} else if(ruleOrder.equalsIgnoreCase("database exists")) {
+		} else if(bDatabaseExists) {
 			return RuleType.DATABASE_EXISTS;
 		} else if(b2) {
 		//} else if(ruleOrder.startsWith("tables") && ruleOrder.endsWith("do not exist")) {	
