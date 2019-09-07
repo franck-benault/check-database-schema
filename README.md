@@ -14,22 +14,28 @@ an empty line or a line containing only space in not taken in account
 rule started by #
 
 ### Check if the database exists
-database exists
+* database exists
+* Database exists
 
 ### Check if a table exists
 #### One table
-table &lt;tableName&gt; exists
+* table &lt;tableName&gt; exists
+* Table &lt;tableName&gt; exists
+
 
 #### Several tables
-tables &lt;tableName1&gt;,&lt;tableName2&gt;... exist
+* tables &lt;tableName1&gt;,&lt;tableName2&gt;... exist
+* Tables &lt;tableName1&gt;,&lt;tableName2&gt;... exist
 
 
 ### Check if a table does not exist
 #### One table
-table &lt;tableName&gt; does not exist
+* table &lt;tableName&gt; does not exist
+* Table &lt;tableName&gt; does not exist
 
 #### Several tables
-tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
+* tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
+* tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
 
 ### Trim rule
 the rule are trimmed 
@@ -43,14 +49,16 @@ becomes
 # This is a comment following by an empty line
 
 database exists
-table FOO exists
-table FOO2 exists
+Table FOO exists
+Table FOO2 exists
 #
 #better in one line
-tables FOO,FOO2 exit
+Tables FOO,FOO2 exit
 #
-table FOO3 does not exist
-table FOO4 does not exist
+Table FOO3 does not exist
+Table FOO4 does not exist
+#better in one line
+Tables FOO,FOO2 does not exit
 # End file
 ```
 

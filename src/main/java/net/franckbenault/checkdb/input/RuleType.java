@@ -23,7 +23,7 @@ public enum RuleType {
 		boolean bTablesDoNotExist = Pattern.compile("^[Tt]ables (.)* do not exist$").matcher(ruleOrder).find();
 		boolean bTablesExist = Pattern.compile("^[Tt]ables (.)* exist$").matcher(ruleOrder).find();		
 		boolean bTableExists = Pattern.compile("^[Tt]able (.)* exists$").matcher(ruleOrder).find();
-		
+		boolean bTableDoesNotExist = Pattern.compile("^[Tt]able (.)* does not exist$").matcher(ruleOrder).find();
 
 		if(bComment) {
 			return RuleType.COMMENT;		
@@ -37,7 +37,7 @@ public enum RuleType {
 			return RuleType.TABLES_EXIST;			
 		} else if(bTableExists) {
 			return RuleType.TABLE_EXISTS;	
-		} else if(ruleOrder.startsWith("table") && ruleOrder.endsWith("does not exist")) {
+		} else if(bTableDoesNotExist) {
 			return RuleType.TABLE_DOES_NOT_EXIST;				
 		} else {
 			return RuleType.UNKNOWN_RULE;
