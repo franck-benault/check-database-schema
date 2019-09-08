@@ -35,7 +35,11 @@ rule started by #
 
 #### Several tables
 * tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
-* tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
+* Tables &lt;tableName1&gt;,&lt;tableName2&gt;... do not exist
+
+### Check field
+* table &lt;tableName&gt; with fields &lt;field1&gt;,&lt;field2&gt;... exists
+* Table &lt;tableName&gt; with fields &lt;field1&gt;,&lt;field2&gt;... exists
 
 ### Trim rule
 the rule are trimmed 
