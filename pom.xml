@@ -10,7 +10,7 @@
 	<name>check-database-schema</name>
 
 	<properties>
-		<slf4j-release-version>1.7.10</slf4j-release-version>
+		<slf4j-release-version>1.7.28</slf4j-release-version>
 		<junit.jupiter.version>5.5.1</junit.jupiter.version>
 		<junit.platform.version>1.5.1</junit.platform.version>
 	</properties>
@@ -54,8 +54,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-release-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.28</version>
+			<version>${slf4j-release-version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

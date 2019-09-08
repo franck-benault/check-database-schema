@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.hsqldb.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DBServer {
+	
+	private static final Logger logger = LoggerFactory.getLogger("SampleLogger");
 	
 	private Server hsqlServer;
 	
@@ -35,11 +39,13 @@ public class DBServer {
 	public void start() {
 
         hsqlServer.start();
+        logger.info("DB started");
 	}
 	
 	public void stop() {
 
         hsqlServer.stop();
+        logger.info("DB stopped");
 	}
 	
 	public void createTable(String tableName) {

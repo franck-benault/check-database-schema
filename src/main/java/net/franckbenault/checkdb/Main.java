@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
@@ -14,7 +17,10 @@ import net.franckbenault.checkdb.input.DatabaseType;
 import net.franckbenault.checkdb.input.Rule;
 import net.franckbenault.checkdb.output.CheckOutput;
 
+
 public class Main {
+	
+	private static final Logger logger = LoggerFactory.getLogger("SampleLogger");
 
 	@Parameter(names = { "--databaseType", "-dt" })
 	private String databaseType;
@@ -53,11 +59,12 @@ public class Main {
 				line = br.readLine();
 			}
 		} catch (IOException e) {
+			logger.info("exception {}",e.getMessage());
 			e.printStackTrace();
 		}
 
 		CheckOutput output = Check.check(dbConnection, rules);
-		System.out.println(output);
+		logger.info("output= {}", output);
 
 	}
 
