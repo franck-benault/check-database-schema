@@ -1,5 +1,8 @@
 package net.franckbenault.checkdb.acceptance;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -170,6 +173,35 @@ extends ScenarioTest<GivenStage, WhenStage, ThenStage>
         then().the_output_is_$_with_$_message("ERROR","two").and().
         the_list_of_messages_in_output_contains_$("Table "+tableName1 +" exists").and().
         the_list_of_messages_in_output_contains_$("Table "+tableName2 +" exists");
+	}
+	
+	
+	@Test
+	public void check09_rule_table_with_fields_exists_OK() {
+		String tableName1 ="FOO1";
+		String field1 = "name1";
+		String field2 = "name2";
+		List<String> fields = Arrays.asList(field1, field2);
+        given().an_dbhsql_database_containing_the_table_$_with_fields_$(tableName1,fields);
+        when().i_add_the_rule_$("table "+tableName1+" with fields "+field1+","+field2+" exists").
+        and().i_check();
+        then().the_output_is_$_with_$_message("OK","no");
+	}
+	
+	@Test
+	public void check09b_rule_table_with_fields_exists_Error() {
+		String tableName1 ="FOO1";
+		String field1 = "name1";
+		String field2 = "name2";
+		List<String> fields = Arrays.asList(field1, field2);
+		String field3 = "name3";
+		String field4 = "name4";
+        given().an_dbhsql_database_containing_the_table_$_with_fields_$(tableName1,fields);
+        when().i_add_the_rule_$("table "+tableName1+" with fields "+field3+","+field4+" exists").
+        and().i_check();
+        then().the_output_is_$_with_$_message("ERROR","two").and().
+        the_list_of_messages_in_output_contains_$("Table "+tableName1 +" does not contain the field "+field3).and().
+        the_list_of_messages_in_output_contains_$("Table "+tableName1 +" does not contain the field "+field4);
 	}
 	
 	

@@ -74,4 +74,20 @@ public class GivenStage extends Stage<GivenStage>{
 		
 	}
 
+
+	public GivenStage an_dbhsql_database_containing_the_table_$_with_fields_$(String tableName, @Table List<String> fields) {
+		server = new DBServer();
+		server.start();
+	
+		server.createTableWithFields(tableName, fields);
+		tables.add(tableName);
+		
+
+		databaseConnection = new DatabaseConnection(DatabaseType.HSQLDB,
+				"jdbc:hsqldb:hsql://localhost/xdb", "SA", "");
+		
+		return self();
+		
+	}
+
 }

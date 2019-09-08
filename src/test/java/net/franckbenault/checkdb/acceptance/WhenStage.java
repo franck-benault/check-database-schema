@@ -61,4 +61,10 @@ public class WhenStage extends Stage<WhenStage>{
 
 	}
 
+	public WhenStage i_add_the_rule_$_$(@Quoted String ruleTxt) {
+		rules.add(new Rule(ruleTxt));
+		
+		return self();
+	}
+
 }

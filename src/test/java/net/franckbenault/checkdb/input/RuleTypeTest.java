@@ -46,6 +46,20 @@ class RuleTypeTest {
 	}
 	
 	@Test
+	void testRuleTypeTableWithFieldsExists() {
+		
+		RuleType t =RuleType.getType("table toto with field titi exists");
+		assertEquals(t, RuleType.TABLE_WITH_FIELDS_EXISTS);
+		
+		t =RuleType.getType(" Table toto with fields tata,toto exists ");
+		assertEquals(t, RuleType.TABLE_WITH_FIELDS_EXISTS);
+		
+		t =RuleType.getType("this is not an table with fields exists rule");
+		assertNotEquals(t, RuleType.TABLE_WITH_FIELDS_EXISTS);
+	}
+
+	
+	@Test
 	void testRuleTypeTablesDoNotExist() {
 		
 		RuleType t =RuleType.getType("tables toto,titi,tata do not exist");

@@ -114,6 +114,24 @@ public class Rule {
 	      		OutputLine line =  new OutputLine(ResultCode.ERROR, "Table "+table+" exists");
 	      		output.addLine(line);
 	      		return output; 
+	      	case TABLE_WITH_FIELDS_EXISTS :
+	      		tabs =ruleOrder.split(" ");
+	      		table = tabs[1];
+	      		String fieldsTab = tabs[4];
+	      		String[] fields = fieldsTab.split(",");
+	      		for(String field : fields) {
+	      			try {
+	      				Connection connection = dbConnection.getConnection();
+	      				statement = connection.createStatement();
+	      				statement
+	      					.executeQuery("SELECT "+field+" from "+table);
+	      			} catch (Exception e) {
+	      				line =  new OutputLine(ResultCode.ERROR, "Table "+table+" does not contain the field "+field);
+	      				output.addLine(line);
+	      			}
+	      		}  		
+	      		return output; 
+	      		
 	      	default:
 				//unknown rule
 				line =  new OutputLine(ResultCode.WARN, "Unknown rule "+ruleOrder);
